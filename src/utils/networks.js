@@ -43,7 +43,18 @@ const networks = {
 		pubKeyHash: 0x6f,
 		scriptHash: 0x3a,
 		wif: 0xef
-	}
+	},
+	baricoin: {
+		messagePrefix: '\Baricoin Signed Message:\n',
+		bech32: 'bari',
+		bip32: {
+			public: 0x0488b21e,
+			private: 0x0488ade4
+		},
+		pubKeyHash: 0x1a,
+		scriptHash: 0x15,
+		wif: 0x9a
+	},
 };
 
 //Max amount of BTC/LTC.
@@ -51,7 +62,8 @@ const maxCoins = {
 	bitcoin: 2100000000000000,
 	bitcoinTestnet: 2100000000000000,
 	litecoin: 8400000000000000,
-	litecoinTestnet: 8400000000000000
+	litecoinTestnet: 8400000000000000,
+	baricoin: 1000000000000000000,
 };
 
 //Returns an array of all available coins from the networks object.
@@ -62,6 +74,7 @@ const supportsRbf = {
 	bitcoinTestnet: true,
 	litecoin: false,
 	litecoinTestnet: false
+	baricoin: false
 };
 
 const zeroValueItems = {
@@ -69,6 +82,7 @@ const zeroValueItems = {
 	bitcoinTestnet: 0,
 	litecoin: 0,
 	litecoinTestnet: 0,
+	baricoin: 0,
 	timestamp: null
 };
 
@@ -77,6 +91,7 @@ const arrayTypeItems = {
 	bitcoinTestnet: [],
 	litecoin: [],
 	litecoinTestnet: [],
+	baricoin: [],
 	timestamp: null
 };
 
@@ -85,6 +100,7 @@ const objectTypeItems = {
 	bitcoinTestnet: {},
 	litecoin: {},
 	litecoinTestnet: {},
+	baricoin: {},
 	timestamp: null
 };
 
@@ -109,18 +125,21 @@ const defaultWalletShape = {
 		bitcoinTestnet: "84",
 		litecoin: "84",
 		litecoinTestnet: "84"
+		baricoin: "84"
 	},
 	coinTypePath: {
 		bitcoin: "0",
 		bitcoinTestnet: "1",
 		litecoin: "2",
 		litecoinTestnet: "1"
+		baricoin: "2"
 	},
 	addressType: { //Accepts bech32, segwit, legacy
 		bitcoin: "bech32",
 		bitcoinTestnet: "bech32",
 		litecoin: "bech32",
 		litecoinTestnet: "bech32"
+		baricoin: "bech32"
 	},
 	rbfData: objectTypeItems
 };
@@ -135,6 +154,8 @@ const getCoinImage = (coin = "bitcoin") => {
 				return require(`../assets/bitcoin.png`);
 			case "litecoin":
 				return require(`../assets/litecoin.png`);
+			case "baricoin":
+				return require('../assets/baricoin.png')
 			default:
 				return require(`../assets/bitcoin.png`);
 		}
@@ -170,6 +191,12 @@ const getCoinData = ({ selectedCrypto = "bitcoin", cryptoUnit = "satoshi" }) => 
 				acronym = cryptoUnit === "satoshi" ? "lits" : "LTC";
 				blockTime = 2.5;
 				return { acronym, label: "Litecoin Testnet", crypto: "LTC", satoshi, oshi, blockTime };
+			case "baricoin":
+				satoshi = "mbari";
+				oshi = "μmari";
+				acronym = cryptoUnit === "satoshi" ? "mbari" : "BARI";
+				blockTime = 1.0;
+				return { acronym, label: "Baricoin", crypto: "BARI", satoshi, oshi, blockTime };
 			default:
 				acronym = cryptoUnit === "satoshi" ? "sats" : "BTC";
 				return { acronym, label: "Bitcoin", crypto: "BTC", satoshi, oshi, blockTime };

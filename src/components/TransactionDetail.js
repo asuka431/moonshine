@@ -159,6 +159,7 @@ class TransactionDetail extends PureComponent {
 		if (selectedCrypto === "bitcoinTestnet") url = `https://blockstream.info/testnet/block-height/${block}`;
 		if (selectedCrypto === "litecoin") url = `https://chain.so/block/LTC/${block}`;
 		if (selectedCrypto === "litecoinTestnet") url = `https://chain.so/block/LTC/${block}`;
+		if (selectedCrypto === "baricoin") url = `https://hogehoge.onion/block/BARI/${block}`;
 		openUrl(url);
 	};
 	
@@ -169,6 +170,7 @@ class TransactionDetail extends PureComponent {
 		if (selectedCrypto === "bitcoinTestnet") url = `https://blockstream.info/testnet/address/${address}`;
 		if (selectedCrypto === "litecoin") url = `https://chain.so/address/LTC/${address}`;
 		if (selectedCrypto === "litecoinTestnet") url = `https://chain.so/address/LTCTEST/${address}`;
+		if (selectedCrypto === "baricoin") url = `https://hogehoge.onion${address}`;
 		openUrl(url);
 	};
 	
@@ -187,6 +189,9 @@ class TransactionDetail extends PureComponent {
 				break;
 			case "litecoinTestnet":
 				url = `https://chain.so/tx/LTCTEST/${tx}`;
+				break;
+			case "baricoin":
+				url = `https://hogehoge,onion/tx/BARI/${tx}`;
 				break;
 			default:
 				return;
