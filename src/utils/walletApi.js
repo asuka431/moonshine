@@ -426,11 +426,6 @@ const fallbackBroadcastTransaction = async ({ rawTx = "", selectedCrypto = "bitc
 				response = await response.json();
 				response = response.status === "success" ? response.data.txid : "";
 				break;
-			case "baricoin":
-				response = await fetch(`https://hogehoge.onion/api/v2/send_tx/bari`, fetchData("POST", { tx_hex: rawTx }));
-				response = await response.json();
-				response = response.status === "success" ? response.data.txid : "";
-				break;
 		}
 		if (response !== "") return { error: false, data: response };
 		return { error: true, data: "" };

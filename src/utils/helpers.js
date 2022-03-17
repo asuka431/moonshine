@@ -700,7 +700,6 @@ const openTxId = (txid = "", selectedCrypto = ""): void => {
 	if (selectedCrypto === "bitcoinTestnet") url = `https://blockstream.info/testnet/tx/${txid}`;
 	if (selectedCrypto === "litecoin") url = `https://chain.so/tx/LTC/${txid}`;
 	if (selectedCrypto === "litecoinTestnet") url = `https://chain.so/tx/LTCTEST/${txid}`;
-	if (selectedCrypto === "baricoin") url = `https://hogehoge.onion/tx/BARI/${txid}`;
 	openUrl(url);
 };
 
