@@ -1,5 +1,16 @@
 // https://en.bitcoin.it/wiki/List_of_address_prefixes
 const networks = {
+	canadaecoin: {
+		messagePrefix: '\Bari Coin Signed Message:\n',
+		bech32: 'bari',
+		bip32: {
+			public: 0x0488b21e,
+			private: 0x0488ade4
+		},
+		pubKeyHash: 0x1a,
+		scriptHash: 0x15,
+		wif: 0x9a
+	},
 	bitcoin: {
 		messagePrefix: '\x18Bitcoin Signed Message:\n',
 		bech32: 'bc',
@@ -11,17 +22,6 @@ const networks = {
 		scriptHash: 0x05,
 		wif: 0x80
 	},
-	bitcoinTestnet: {
-		messagePrefix: '\x18Bitcoin Signed Message:\n',
-		bech32: 'tb',
-		bip32: {
-			public: 0x043587cf,
-			private: 0x04358394
-		},
-		pubKeyHash: 0x6f,
-		scriptHash: 0xc4,
-		wif: 0xef
-	},
 	litecoin: {
 		messagePrefix: '\x19Litecoin Signed Message:\n',
 		bech32: 'ltc',
@@ -32,26 +32,14 @@ const networks = {
 		pubKeyHash: 0x30,
 		scriptHash: 0x32,
 		wif: 0xb0
-	},
-	litecoinTestnet: {
-		messagePrefix: '\x18Litecoin Signed Message:\n',
-		bech32: 'tltc',
-		bip32: {
-			public: 0x0436f6e1,
-			private: 0x0436ef7d
-		},
-		pubKeyHash: 0x6f,
-		scriptHash: 0x3a,
-		wif: 0xef
 	}
 };
 
 //Max amount of BTC/LTC.
 const maxCoins = {
+	baricoin: 1000000000000000000,
 	bitcoin: 2100000000000000,
-	bitcoinTestnet: 2100000000000000,
-	litecoin: 8400000000000000,
-	litecoinTestnet: 8400000000000000
+	litecoin: 8400000000000000
 };
 
 //Returns an array of all available coins from the networks object.
@@ -59,32 +47,28 @@ const availableCoins = Object.keys(networks).map(coin => coin);
 
 const supportsRbf = {
 	bitcoin: true,
-	bitcoinTestnet: true,
 	litecoin: false,
-	litecoinTestnet: false
+	baricoin: false
 };
 
 const zeroValueItems = {
 	bitcoin: 0,
-	bitcoinTestnet: 0,
 	litecoin: 0,
-	litecoinTestnet: 0,
+	baricoin: 0,
 	timestamp: null
 };
 
 const arrayTypeItems = {
 	bitcoin: [],
-	bitcoinTestnet: [],
 	litecoin: [],
-	litecoinTestnet: [],
+	baricoin: [],
 	timestamp: null
 };
 
 const objectTypeItems = {
 	bitcoin: {},
-	bitcoinTestnet: {},
 	litecoin: {},
-	litecoinTestnet: {},
+	bariecoin: {},
 	timestamp: null
 };
 
@@ -107,20 +91,23 @@ const defaultWalletShape = {
 	keyDerivationPath: {
 		bitcoin: "84",
 		bitcoinTestnet: "84",
-		litecoin: "84",
-		litecoinTestnet: "84"
+		litecoin: "44",
+		litecoinTestnet: "44",
+		baricoin: "44",
 	},
 	coinTypePath: {
 		bitcoin: "0",
 		bitcoinTestnet: "1",
 		litecoin: "2",
-		litecoinTestnet: "1"
+		litecoinTestnet: "1",
+		canadaecoin: "810",
 	},
 	addressType: { //Accepts bech32, segwit, legacy
 		bitcoin: "bech32",
 		bitcoinTestnet: "bech32",
-		litecoin: "bech32",
-		litecoinTestnet: "bech32"
+		litecoin: "legacy",
+		litecoinTestnet: "legacy",
+		baricoin: "legacy",
 	},
 	rbfData: objectTypeItems
 };
@@ -132,47 +119,60 @@ const getCoinImage = (coin = "bitcoin") => {
 
 		switch (coin) {
 			case "bitcoin":
-				return require(`../assets/bitcoin.png`);
+				return require(`../assets/ecoins/bitcoin.png`);
 			case "litecoin":
-				return require(`../assets/litecoin.png`);
+				return require(`../assets/ecoins/litecoin.png`);
+			case "canadaecoin":
+				return require(`../assets/ecoins/baricoin.png`);
 			default:
-				return require(`../assets/bitcoin.png`);
+				return require(`../assets/ecoins/baricoin.png`);
 		}
 	} catch (e) {
-		return require(`../assets/bitcoin.png`);
+		return require(`../assets/ecoins/baricoin.png`);
 	}
 };
 
-const getCoinData = ({ selectedCrypto = "bitcoin", cryptoUnit = "satoshi" }) => {
+const getCoinData = ({ selectedCrypto = "baricoin", cryptoUnit = "BARI" }) => {
 	try {
-		let acronym = "BTC";
-		let satoshi = "satoshi";
-		let oshi = "sats";
-		let blockTime = 10; //min
+		let acronym = "BARI";
+		let satoshi = "bit";
+		let oshi = "bits";
+		let blockTime = 5; //min
 		switch (selectedCrypto) {
 			case "bitcoin":
+				satoshi = "satoshi";
 				acronym = cryptoUnit === "satoshi" ? "sats" : "BTC";
 				oshi = "sats";
-				return { acronym, label: "Bitcoin", crypto: "BTC", satoshi, oshi, blockTime };
-			case "bitcoinTestnet":
-				acronym = cryptoUnit === "satoshi" ? "sats" : "BTC";
-				oshi = "sats";
-				return { acronym, label: "Bitcoin Testnet", crypto: "BTC", satoshi, oshi, blockTime };
+				blockTime = 10;
+				color = "#f7931a";
+				return { acronym, label: "Bitcoin", crypto: "BTC", satoshi, oshi, blockTime, color };
 			case "litecoin":
 				satoshi = "litoshi";
 				oshi = "lits";
 				acronym = cryptoUnit === "satoshi" ? "lits" : "LTC";
 				blockTime = 2.5;
-				return { acronym, label: "Litecoin", crypto: "LTC", satoshi, oshi, blockTime };
-			case "litecoinTestnet":
-				satoshi = "litoshi";
-				oshi = "lits";
-				acronym = cryptoUnit === "satoshi" ? "lits" : "LTC";
-				blockTime = 2.5;
-				return { acronym, label: "Litecoin Testnet", crypto: "LTC", satoshi, oshi, blockTime };
+				color = "#444444";
+				return { acronym, label: "Litecoin", crypto: "LTC", satoshi, oshi, blockTime, color };
+			case "baricoin":
+				return {
+					acronym: cryptoUnit === "satoshi" ? "bits" : "BARI",
+					label: "Bari Coin",
+					crypto: "BARI",
+					satoshi: "bit",
+					oshi: "bits",
+					blockTime: 1,
+					color: "#90191c"
+				};
 			default:
-				acronym = cryptoUnit === "satoshi" ? "sats" : "BTC";
-				return { acronym, label: "Bitcoin", crypto: "BTC", satoshi, oshi, blockTime };
+				return {
+					acronym: cryptoUnit === "satoshi" ? "bits" : "BARI",
+					label: "Bari Coin",
+					crypto: "BARI",
+					satoshi: "bit",
+					oshi: "bits",
+					blockTime: 5,
+					color: "#90191c"
+				};
 		}
 	} catch (e) {
 		console.log(e);
