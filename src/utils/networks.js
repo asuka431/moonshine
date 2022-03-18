@@ -1,7 +1,7 @@
 // https://en.bitcoin.it/wiki/List_of_address_prefixes
 const networks = {
-	canadaecoin: {
-		messagePrefix: '\Bari Coin Signed Message:\n',
+	baricoin: {
+		messagePrefix: '\Baricoin Signed Message:\n',
 		bech32: 'bari',
 		bip32: {
 			public: 0x0488b21e,
@@ -68,7 +68,7 @@ const arrayTypeItems = {
 const objectTypeItems = {
 	bitcoin: {},
 	litecoin: {},
-	bariecoin: {},
+	baricoin: {},
 	timestamp: null
 };
 
@@ -100,14 +100,14 @@ const defaultWalletShape = {
 		bitcoinTestnet: "1",
 		litecoin: "2",
 		litecoinTestnet: "1",
-		canadaecoin: "810",
+		baricoin: "810",
 	},
 	addressType: { //Accepts bech32, segwit, legacy
 		bitcoin: "bech32",
 		bitcoinTestnet: "bech32",
 		litecoin: "legacy",
 		litecoinTestnet: "legacy",
-		baricoin: "legacy",
+		baricoin: "bech32",
 	},
 	rbfData: objectTypeItems
 };
@@ -119,16 +119,16 @@ const getCoinImage = (coin = "bitcoin") => {
 
 		switch (coin) {
 			case "bitcoin":
-				return require(`../assets/ecoins/bitcoin.png`);
+				return require(`../assets/bitcoin.png`);
 			case "litecoin":
-				return require(`../assets/ecoins/litecoin.png`);
-			case "canadaecoin":
-				return require(`../assets/ecoins/baricoin.png`);
+				return require(`../assets/litecoin.png`);
+			case "baricoin":
+				return require(`../assets/baricoin.png`);
 			default:
-				return require(`../assets/ecoins/baricoin.png`);
+				return require(`../assets/baricoin.png`);
 		}
 	} catch (e) {
-		return require(`../assets/ecoins/baricoin.png`);
+		return require(`../assets/baricoin.png`);
 	}
 };
 

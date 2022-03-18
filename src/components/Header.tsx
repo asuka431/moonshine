@@ -52,7 +52,8 @@ interface HeaderComponent {
 	fontSize: number,
 	fiatValue: number,
 	cryptoValue: number | string,
-	cryptoUnit: string
+	cryptoUnit: string,
+	selectedCurrency: string,
 }
 const _Header = ({compress = false, fiatSymbol = "$", selectedCrypto = "bitcoin", onSelectCoinPress = () => null, isOnline = true, exchangeRate = 0, walletName = "", selectedCryptoStyle = {}, activeOpacity = 0.6, fontSize = 60, fiatValue = 0, cryptoValue = 0, cryptoUnit = "satoshi"}: HeaderComponent) => {
 	try {
