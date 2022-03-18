@@ -190,8 +190,6 @@ class TransactionDetail extends PureComponent {
 			case "litecoinTestnet":
 				url = `https://chain.so/tx/LTCTEST/${tx}`;
 				break;
-			default:
-				return;
 			case "baricoin":
 				url = `https://chain.so/tx/BARI/${tx}`;
 				break;
