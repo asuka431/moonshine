@@ -32,6 +32,6 @@
     // {"host": "ltc.litepay.ch", "ssl": 50002, "tcp": 50001}
   ],
   "baricoin": [
-    {"host": "baricoin.clear-net.jp", "tcp": 50001 }
+    {"host": "baricoin.clear-net.jp", "ssl":5002, "tcp": 50001 }
   ]
 }
