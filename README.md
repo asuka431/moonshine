@@ -1,3 +1,6 @@
+# warnin!わーにん！
+AndroidNDK-33rc2 SDK android10 java1.8 openjdk 
+↑this is i could build up successfully. 2022/3/18. i recommend you to use every tools version near time of this
 <img align="left" width="80" height="80" src="src/assets/logo/main_icon.png" alt="Moonshine Icon">
 
 # Moonshine
